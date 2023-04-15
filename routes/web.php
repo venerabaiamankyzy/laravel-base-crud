@@ -17,5 +17,5 @@ use App\Http\Controllers\TrackController;
 Route::resource('tracks', TrackController::class);
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('homepage');
+})->name('homepage');
