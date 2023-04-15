@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Track;
+
+use function PHPUnit\Framework\returnValue;
+
 class TrackController extends Controller
 {
     /**
@@ -13,7 +17,8 @@ class TrackController extends Controller
      */
     public function index()
     {
-        //
+        $tracks = Track::all();
+        return view('tracks.index', compact('tracks'));
     }
 
     /**
@@ -43,9 +48,9 @@ class TrackController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Track $track)
     {
-        //
+        return view('tracks.show', compact('track'));
     }
 
     /**
