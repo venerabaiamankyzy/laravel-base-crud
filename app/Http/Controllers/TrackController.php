@@ -15,9 +15,15 @@ class TrackController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tracks = Track::all();
+        if($request->has('term')) {
+            $term = $request->get('term');
+            $tracks = Track::where('title', 'LIKE', "%$term%")->paginate(5)->withQueryString();
+        }else {
+             $tracks = Track::paginate(5);
+        }
+       
         return view('tracks.index', compact('tracks'));
     }
 
@@ -28,7 +34,7 @@ class TrackController extends Controller
      */
     public function create()
     {
-        //
+       return view('tracks.create');
     }
 
     /**
@@ -39,7 +45,8 @@ class TrackController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       
+
     }
 
     /**
@@ -52,6 +59,11 @@ class TrackController extends Controller
     {
         return view('tracks.show', compact('track'));
     }
+    // // public function show(Int $id)
+    // // {
+    // //     $track = Track::find($id);
+    // //     return view('tracks.show', compact('track'));
+    // // }
 
     /**
      * Show the form for editing the specified resource.
