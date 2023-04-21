@@ -20,13 +20,19 @@ use App\Http\Controllers\PageController;
 Route::get('/', [PageController::class, 'index'])->name('homepage');
 
 //Rotta per la lista della risorsa
-Route::get('/tracks', [TrackController::class, 'index'])->name('tracks.index');
+Route::get('tracks', [TrackController::class, 'index'])->name('tracks.index');
 
 //Rotta per il dettaglio della risorsa
-Route::get('tracks{track}', [TrackController::class, 'show'])->name('tracks.show');
+Route::get('tracks/{track}', [TrackController::class, 'show'])->name('tracks.show');
 
-//Rotta per la creazione della risorsa
+//Rotta per il form di creazione della risorsa
 Route::get('tracks/create', [TrackController::class, 'create'])->name('tracks.create');
 
-//Rotta per la salvataggio della risorsa
+//Rotta per il form di salvataggio della risorsa
 Route::post('tracks', [TrackController::class, 'store'])->name('tracks.store');
+
+//Rotta per il form di modifica della risorsa
+Route::get('tracks/{track}/edit', [TrackController::class, 'edit'])->name('tracks.edit');
+
+//Rotta per il form di modifica della risorsa
+Route::put('tracks/{track}/update', [TrackController::class, 'update'])->name('tracks.update');
