@@ -27,6 +27,7 @@
             <th scope="col">Author</th>
             <th scope="col">Poster</th>
             <th scope="col">Length</th>
+            <th scope="col">Action</th>
           </tr>
           </tr>
         </thead>
@@ -39,19 +40,57 @@
             <td>{{$track->author}}</td>
             <td>{{$track->poster}}</td>
             <td>{{$track->length}}</td>
-            <td><a href="{{route('tracks.show', $track)}}"><i class="bi bi-eye"></i></a></td>
-            {{-- <td><a href="{{route('tracks.show', ['track'=$track->id])}}"><i class="bi bi-eye"></i></a></td> --}}
-           <td><a href="{{ route('tracks.edit', $track)}}"><i class="bi bi-pencil"></i></a></td>
-          </tr>
-         @empty
-        
-          @endforelse  
+            <td class="action-cell">
+              <a href="{{route('tracks.show', $track)}}"><i class="bi bi-eye"></i></a>
+              {{-- <td><a href="{{route('tracks.show', ['track'=$track->id])}}"><i class="bi bi-eye"></i></a></td> --}}
+
+              <a href="{{ route('tracks.edit', $track)}}"><i class="bi bi-pencil"></i></a>
+
+              <button class="bi bi-trash3 text-danger btn-icon" data-bs-toggle="modal" data-bs-target="#delete-modal-{{ $track->id }}"></button> 
+              
+            </td>   
+          </tr>   
+          @empty  
+          @endforelse 
         </tbody>
-      </table>
-    {{ $tracks->links('pagination::bootstrap-5')}}
+      </table>     
+    {{ $tracks->links('pagination::bootstrap-5')}}    
+  </div>    
+@endsection      
+
+@section('modals')
+  @forelse ($tracks as $track)
+    <!-- Modal -->
+    <div class="modal fade" id="delete-modal-{{ $track->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Conferma eliminazione !</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body text-start">
+            Sei sicuro di voler eliminare la canzone {{ $track->title }} di {{ $track->author }} con ID - {{ $track->id }} selezionato? <br>
+            L'operazione non è reversibile.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+            
+            <form action="{{ route('tracks.destroy', $track)}}" method="POST">
+                @method('delete')
+                @csrf 
+                
+                <button type="submit" class="btn btn-danger">Elimina</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    @empty  
+  @endforelse
+@endsection
+    
         
      
     
-  </div>
+  
    
-@endsection

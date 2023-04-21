@@ -15,24 +15,27 @@ use App\Http\Controllers\PageController;
 |
 */
 
-// Route::resource('tracks', TrackController::class);
+Route::resource('tracks', TrackController::class);
 
 Route::get('/', [PageController::class, 'index'])->name('homepage');
 
-//Rotta per la lista della risorsa
-Route::get('tracks', [TrackController::class, 'index'])->name('tracks.index');
+// //Rotta per la lista della risorsa
+// Route::get('/tracks', [TrackController::class, 'index'])->name('tracks.index');
 
-//Rotta per il dettaglio della risorsa
-Route::get('tracks/{track}', [TrackController::class, 'show'])->name('tracks.show');
+// //Rotta per il dettaglio della risorsa
+// Route::get('/tracks/{track}', [TrackController::class, 'show'])->name('tracks.show');
 
-//Rotta per il form di creazione della risorsa
-Route::get('tracks/create', [TrackController::class, 'create'])->name('tracks.create');
+// //Rotta per il form di creazione della risorsa
+// Route::get('tracks/create', [TrackController::class, 'create'])->name('tracks.create');
 
-//Rotta per il form di salvataggio della risorsa
-Route::post('tracks', [TrackController::class, 'store'])->name('tracks.store');
+// //Rotta per il form di salvataggio della risorsa
+// Route::post('/tracks', [TrackController::class, 'store'])->name('tracks.store');
 
-//Rotta per il form di modifica della risorsa
-Route::get('tracks/{track}/edit', [TrackController::class, 'edit'])->name('tracks.edit');
+// //Rotta per il form di modifica della risorsa
+// Route::get('/tracks/{track}/edit', [TrackController::class, 'edit'])->name('tracks.edit');
 
-//Rotta per il form di modifica della risorsa
-Route::put('tracks/{track}/update', [TrackController::class, 'update'])->name('tracks.update');
+// //Rotta per il form di modifica della risorsa
+// Route::put('/tracks/{track}/update', [TrackController::class, 'update'])->name('tracks.update');
+
+// //Rotta per il form di eliminazione della risorsa
+// Route::delete('/tracks/{track}/destroy', [TrackController::class, 'destroy'])->name('tracks.destroy');
