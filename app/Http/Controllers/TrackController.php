@@ -45,6 +45,35 @@ class TrackController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'title' => 'required|string|max:50',
+            'album' => 'nullable|string',
+            'author' => 'required|string',
+            'editor' => 'nullable|string',
+            'length' => 'required|integer',
+            'poster' => 'required|string',
+        
+        ], [
+            // '*.required' => 'Il :attribuite è obbligatorio',
+            'title.required' => 'Il titolo è obbligatorio',
+            'title.string' => 'Il titolo deve essere una stringa',
+            'title.max' => 'Il titolo deve essere massimo di 50 caratteri',
+            
+            'album.string' => 'Il titolo deve essere una stringa',
+            
+            'author.required' => 'L\'author è obbligatorio',
+            'author.string' => 'L\'author deve essere una stringa',
+         
+            'editor.string' => 'L\'editor deve essere una stringa',
+
+            'length.required' => 'La lungezza è obbligatorio',
+            'length.length' => 'La lungezza deve essere un numero',
+            
+            'poster.required' => 'Il poster è obbligatorio',
+            'poster.string' => 'Il poster deve essere una stringa',
+           
+        ]);
+        
         $data = $request->all();
 
         $track = new Track;      
@@ -86,9 +115,9 @@ class TrackController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Track $track)
     {
-        //
+        return view('tracks.edit', compact('track'));
     }
 
     /**
@@ -98,9 +127,41 @@ class TrackController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Track $track)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:50',
+            'album' => 'nullable|string',
+            'author' => 'required|string',
+            'editor' => 'nullable|string',
+            'length' => 'required|integer',
+            'poster' => 'required|string',
+        
+        ], [
+            // '*.required' => 'Il :attribuite è obbligatorio',
+            'title.required' => 'Il titolo è obbligatorio',
+            'title.string' => 'Il titolo deve essere una stringa',
+            'title.max' => 'Il titolo deve essere massimo di 50 caratteri',
+            
+            'album.string' => 'Il titolo deve essere una stringa',
+            
+            'author.required' => 'L\'author è obbligatorio',
+            'author.string' => 'L\'author deve essere una stringa',
+         
+            'editor.string' => 'L\'editor deve essere una stringa',
+
+            'length.required' => 'La lungezza è obbligatorio',
+            'length.length' => 'La lungezza deve essere un numero',
+            
+            'poster.required' => 'Il poster è obbligatorio',
+            'poster.string' => 'Il poster deve essere una stringa',
+           
+        ]);
+
+        $data = $request->all();
+        $track->update($data); //come il fill, e poi anche salva
+        return redirect()->route('tracks.show', $track);
+
     }
 
     /**

@@ -41,7 +41,7 @@
             <td>{{$track->length}}</td>
             <td><a href="{{route('tracks.show', $track)}}"><i class="bi bi-eye"></i></a></td>
             {{-- <td><a href="{{route('tracks.show', ['track'=$track->id])}}"><i class="bi bi-eye"></i></a></td> --}}
-            {{-- <td><a href="{{route('tracks.edit', $track)}}"><i class="bi bi-pencil"></i></a></td> --}}
+           <td><a href="{{ route('tracks.edit', $track)}}"><i class="bi bi-pencil"></i></a></td>
           </tr>
          @empty
         
