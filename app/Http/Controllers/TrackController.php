@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+
 use App\Models\Track;
+use Illuminate\Support\Facades\Validator;
 
 use function PHPUnit\Framework\returnValue;
 
@@ -19,9 +21,9 @@ class TrackController extends Controller
     {
         if($request->has('term')) {
             $term = $request->get('term');
-            $tracks = Track::where('title', 'LIKE', "%$term%")->paginate(5)->withQueryString();
+            $tracks = Track::where('title', 'LIKE', "%$term%")->paginate(10)->withQueryString();
         }else {
-             $tracks = Track::paginate(5);
+             $tracks = Track::paginate(10);
         }
        
         return view('tracks.index', compact('tracks'));
@@ -45,37 +47,9 @@ class TrackController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required|string|max:50',
-            'album' => 'nullable|string',
-            'author' => 'required|string',
-            'editor' => 'nullable|string',
-            'length' => 'required|integer',
-            'poster' => 'required|string',
         
-        ], [
-            // '*.required' => 'Il :attribuite è obbligatorio',
-            'title.required' => 'Il titolo è obbligatorio',
-            'title.string' => 'Il titolo deve essere una stringa',
-            'title.max' => 'Il titolo deve essere massimo di 50 caratteri',
-            
-            'album.string' => 'Il titolo deve essere una stringa',
-            
-            'author.required' => 'L\'author è obbligatorio',
-            'author.string' => 'L\'author deve essere una stringa',
-         
-            'editor.string' => 'L\'editor deve essere una stringa',
-
-            'length.required' => 'La lungezza è obbligatorio',
-            'length.length' => 'La lungezza deve essere un numero',
-            
-            'poster.required' => 'Il poster è obbligatorio',
-            'poster.string' => 'Il poster deve essere una stringa',
-           
-        ]);
         
-        $data = $request->all();
-
+        $data = $this->validation($request->all());
         $track = new Track;      
 
         // * Medoto 1
@@ -129,36 +103,7 @@ class TrackController extends Controller
      */
     public function update(Request $request, Track $track)
     {
-        $request->validate([
-            'title' => 'required|string|max:50',
-            'album' => 'nullable|string',
-            'author' => 'required|string',
-            'editor' => 'nullable|string',
-            'length' => 'required|integer',
-            'poster' => 'required|string',
-        
-        ], [
-            // '*.required' => 'Il :attribuite è obbligatorio',
-            'title.required' => 'Il titolo è obbligatorio',
-            'title.string' => 'Il titolo deve essere una stringa',
-            'title.max' => 'Il titolo deve essere massimo di 50 caratteri',
-            
-            'album.string' => 'Il titolo deve essere una stringa',
-            
-            'author.required' => 'L\'author è obbligatorio',
-            'author.string' => 'L\'author deve essere una stringa',
-         
-            'editor.string' => 'L\'editor deve essere una stringa',
-
-            'length.required' => 'La lungezza è obbligatorio',
-            'length.length' => 'La lungezza deve essere un numero',
-            
-            'poster.required' => 'Il poster è obbligatorio',
-            'poster.string' => 'Il poster deve essere una stringa',
-           
-        ]);
-
-        $data = $request->all();
+        $data = $this->validation($request->all());
         $track->update($data); //come il fill, e poi anche salva
         return redirect()->route('tracks.show', $track);
 
@@ -170,8 +115,49 @@ class TrackController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy(Track $track)
+    {   
+        // $track = Track::findOrFail($id);
+        $track->delete();
+        return redirect()->route('tracks.index');
+        
     }
+
+    private function validation($data) {
+      
+        $validator = Validator::make(
+          $data,
+          [
+              'title' => 'required|string|max:50',
+              'album' => 'nullable|string',
+              'author' => 'required|string',
+              'editor' => 'nullable|string',
+              'length' => 'required|integer',
+              'poster' => 'required|string',
+          
+          ],
+          [
+              // '*.required' => 'Il :attribuite è obbligatorio',
+              'title.required' => 'Il titolo è obbligatorio',
+              'title.string' => 'Il titolo deve essere una stringa',
+              'title.max' => 'Il titolo deve essere massimo di 50 caratteri',
+              
+              'album.string' => 'Il titolo deve essere una stringa',
+              
+              'author.required' => 'L\'author è obbligatorio',
+              'author.string' => 'L\'author deve essere una stringa',
+           
+              'editor.string' => 'L\'editor deve essere una stringa',
+  
+              'length.required' => 'La lungezza è obbligatorio',
+              'length.length' => 'La lungezza deve essere un numero',
+              
+              'poster.required' => 'Il poster è obbligatorio',
+              'poster.string' => 'Il poster deve essere una stringa',
+             
+          ]
+          )->validate();
+  
+          return $validator;
+      }
 }
