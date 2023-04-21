@@ -16,8 +16,8 @@
 <body>
   @include('partials._header')
   <main>
-    <div class="container my-4">
-       <h1>@yield('page-name')</h1>
+    <div class="container my-5">
+       <h2 class="text-center mb-4">@yield('page-name')</h2>
         @yield('main-content')
     </div>
    

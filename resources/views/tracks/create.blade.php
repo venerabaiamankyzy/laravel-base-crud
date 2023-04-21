@@ -4,7 +4,7 @@
 
 @section('main-content')
 
-@if ($errors->any())
+{{-- @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
             @foreach ($errors->all() as $error)
@@ -12,7 +12,7 @@
             @endforeach
         </ul>
     </div>
-@endif
+@endif --}}
 
 <form action="{{ route('tracks.store')}}" method="POST" class="row gy-4 gx-5 ">
   @csrf
