@@ -4,49 +4,78 @@
 
 @section('main-content')
 
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 <form action="{{ route('tracks.store')}}" method="POST" class="row gy-4 gx-5 ">
   @csrf
   <div class="col-4">
-    <div class="input-group flex-nowrap ">
-      <label for="title"  class="form-label me-4">Title</label>
-      <input type="text" class="form-control" id="title" name="title">
-    </div>
+    <label for="title"  class="form-label me-4">Title</label>
+    <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title')}}">
+    @error('title')
+    <div class="invalid-feedback">
+      {{ $message}}
+    </div>  
+    @enderror
   </div>
 
   <div class="col-4">
-    <div class="input-group flex-nowrap ">
-      <label for="album"  class="form-label me-4">Album</label>
-      <input type="text" class="form-control" id="album" name="album">
-    </div>
+    <label for="album"  class="form-label me-4">Album</label>
+    <input type="text" class="form-control @error('album') is-invalid @enderror" id="album" name="album" value="{{ old('album')}}">
+    @error('album')
+    <div class="invalid-feedback">
+      {{ $message}}
+    </div>  
+    @enderror
   </div>
   
   <div class="col-4">
-    <div class="input-group flex-nowrap ">
-      <label for="author"  class="form-label me-4">Author</label>
-      <input type="text" class="form-control" id="author" name="author">
-    </div>
+    <label for="author"  class="form-label me-4">Author</label>
+    <input type="text" class="form-control @error('author') is-invalid @enderror" id="author" name="author" value="{{ old('author')}}">
+    @error('author')
+    <div class="invalid-feedback">
+      {{ $message}}
+    </div>  
+    @enderror
   </div>
 
   <div class="col-4">
-    <div class="input-group flex-nowrap ">
-      <label for="editor"  class="form-label me-4">Editor</label>
-      <input type="text" class="form-control" id="editor" name="editor">
-    </div>
+    <label for="editor"  class="form-label me-4">Editor</label>
+    <input type="text" class="form-control @error('editor') is-invalid @enderror" id="editor" name="editor" value="{{ old('editor')}}">
+    @error('editor')
+    <div class="invalid-feedback">
+      {{ $message}}
+    </div>  
+    @enderror
   </div>
 
   <div class="col-4">
-    <div class="input-group flex-nowrap ">
-      <label for="length"  class="form-label me-4">Length</label>
-      <input type="text" class="form-control" id="length" name="length">
-    </div>
+    <label for="length"  class="form-label me-4">Length</label>
+    <input type="text" class="form-control @error('length') is-invalid @enderror" id="length" name="length" value="{{ old('length')}}">
+    @error('length')
+    <div class="invalid-feedback">
+      {{ $message}}
+    </div>  
+    @enderror
   </div>
 
   <div class="col-4">
-    <div class="input-group flex-nowrap ">
-      <label for="poster"  class="form-label me-4">Poster</label>
-      <input type="text" class="form-control" id="poster" name="poster">
-    </div>
-  </div>
+    <label for="poster"  class="form-label me-4">Poster</label>
+    <input type="text" class="form-control @error('poster') is-invalid @enderror" id="poster" name="poster" value="{{ old('poster')}}"> 
+    @error('poster')
+    <div class="invalid-feedback">
+      {{ $message}}
+    </div>  
+    @enderror
+  </div>  
+
 
   <div class="col-12">
     <button type="submit" class="btn btn-outline-success ms-auto">Salva</button>
