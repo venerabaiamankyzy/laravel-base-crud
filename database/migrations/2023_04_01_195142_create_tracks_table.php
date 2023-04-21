@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('album', 150)->nullable()->default('Unknown');
             $table->string('author', 100);
             $table->string('editor', 100)->nullable()->default('Unknown');;
-            $table->smallinteger('length');
+            $table->time('length');
             $table->string('poster');
             $table->timestamps();
         });
